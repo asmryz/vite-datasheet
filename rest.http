@@ -1,0 +1,1 @@
+GET http://localhost:3500/api/students/1112140 HTTP/1.1
