@@ -10,6 +10,11 @@ export default function RegCourse({ regs, updateReg, grades }) {
             .then(res => updateReg(res.data))
     }
 
+    let CGPA = (regs.filter(r => r.gradeid !== null).reduce((sum, r) => (r.course.crhr * r.grade.gpa) + sum, 0) /
+        regs.filter(r => r.gradeid !== null).reduce((sum, r) => r.course.crhr + sum, 0)).toFixed(2);
+
+    CGPA = isNaN(CGPA) ? 0.00 : CGPA;
+
     return (
         <>
             {regs.length !== 0 && (
@@ -45,8 +50,7 @@ export default function RegCourse({ regs, updateReg, grades }) {
                         <tr>
                             <td colSpan={3}></td>
                             <td><b>CGPA</b></td>
-                            <td>{(regs.filter(r => r.gradeid !== null).reduce((sum, r) => (r.course.crhr * r.grade.gpa) + sum, 0) /
-                                regs.filter(r => r.gradeid !== null).reduce((sum, r) => r.course.crhr + sum, 0)).toFixed(2)}</td>
+                            <td style={{ alignItems: 'center' }}>{CGPA}</td>
                         </tr>
                     </tfoot>
                 </table>
